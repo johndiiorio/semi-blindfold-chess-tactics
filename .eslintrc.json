@@ -1,0 +1,27 @@
+{
+	"extends": [
+		"react-app",
+		"plugin:react/recommended",
+		"plugin:relay/recommended",
+		"prettier/react"
+	],
+	"plugins": [
+		"react",
+		"relay",
+		"react-hooks",
+		"prettier"
+	],
+	"rules": {
+		"react-hooks/rules-of-hooks": "error",
+		"react-hooks/exhaustive-deps": "warn",
+		"prettier/prettier": [
+			"error",
+			{
+			  "singleQuote": true,
+				"printWidth": 100,
+				"trailingComma": "all"
+			}
+		],
+		"relay/unused-fields": "off" // Mutations aren't located in the same file as Components
+	}
+}
