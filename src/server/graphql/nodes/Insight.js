@@ -20,7 +20,7 @@ const GraphQLInsight = new GraphQLObjectType({
     id: globalIdField('Insight'),
     puzzle: {
       type: new GraphQLNonNull(GraphQLPuzzle),
-      // resolve: () => {},
+      resolve: insight => insight.puzzle,
     },
     topScores: {
       type: TopScoreConnection,

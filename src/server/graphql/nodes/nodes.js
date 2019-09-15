@@ -1,14 +1,39 @@
 const { fromGlobalId, nodeDefinitions } = require('graphql-relay');
+const { getUserById } = require('../../models/users');
+const { getPuzzleById } = require('../../models/puzzles');
 
 const { nodeInterface, nodeField } = nodeDefinitions(
   globalId => {
     const { type, id } = fromGlobalId(globalId);
-    // TODO implement
-    return null;
+    const getNodeByTypeAndId = (type, id) => {
+      switch (type) {
+        case 'User':
+          return getUserById(id);
+        case 'Puzzle':
+          return getPuzzleById(id);
+        default:
+          return null;
+      }
+    };
+    return {
+      ...getNodeByTypeAndId(type, id),
+      globalId: id,
+    };
   },
   obj => {
-    // TODO implement
-    return null;
+    // Import here to prevent circular dependency
+    const { GraphQLUser } = require('./User');
+    const { GraphQLPuzzle } = require('./Puzzle');
+
+    let { type } = fromGlobalId(obj.globalId);
+    switch (type) {
+      case 'User':
+        return GraphQLUser;
+      case 'Puzzle':
+        return GraphQLPuzzle;
+      default:
+        return null;
+    }
   },
 );
 

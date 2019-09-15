@@ -8,11 +8,11 @@ const GraphQLUser = new GraphQLObjectType({
     id: globalIdField('User'),
     username: {
       type: new GraphQLNonNull(GraphQLString),
-      // resolve: () => {},
+      resolve: user => user.usernamez,
     },
     rating: {
       type: new GraphQLNonNull(GraphQLInt),
-      // resolve: () => {},
+      resolve: user => user.rating,
     },
   },
   interfaces: [nodeInterface],

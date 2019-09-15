@@ -9,11 +9,11 @@ const GraphQLTopScore = new GraphQLObjectType({
     id: globalIdField('TopScore'),
     user: {
       type: new GraphQLNonNull(GraphQLUser),
-      // resolve: () => {},
+      resolve: topScore => topScore.user,
     },
     cursorMovements: {
       type: new GraphQLNonNull(GraphQLString),
-      // resolve: () => {},
+      resolve: topScore => topScore.cursorMovements,
     },
   },
   interfaces: [nodeInterface],

@@ -14,15 +14,15 @@ const GraphQLPuzzle = new GraphQLObjectType({
     id: globalIdField('Puzzle'),
     difficulty: {
       type: new GraphQLNonNull(GraphQLInt),
-      // resolve: () => {},
+      resolve: puzzle => puzzle.difficulty,
     },
     startFen: {
       type: new GraphQLNonNull(GraphQLString),
-      // resolve: () => {},
+      resolve: puzzle => puzzle.startFen,
     },
     moves: {
       type: new GraphQLNonNull(GraphQLList(new GraphQLNonNull(GraphQLString))),
-      // resolve: () => {},
+      resolve: puzzle => puzzle.moves,
     },
   },
   interfaces: [nodeInterface],
