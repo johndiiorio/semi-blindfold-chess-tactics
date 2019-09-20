@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const helmet = require('helmet');
 const schema = require('./graphql');
+const buildContext = require('./buildContext');
 
 const app = express();
 
@@ -16,11 +17,12 @@ app.use(express.static(path.join(__dirname, '..', '..', 'build')));
 
 app.use(
   '/graphql',
-  graphQLHTTP({
+  graphQLHTTP(req => ({
     schema,
     pretty: true,
     graphiql: process.env.NODE_ENV === 'development',
-  }),
+    context: buildContext(req),
+  })),
 );
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', '..', 'public', 'index.html'));

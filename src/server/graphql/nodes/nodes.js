@@ -1,6 +1,6 @@
 const { fromGlobalId, nodeDefinitions } = require('graphql-relay');
-const { getUserById } = require('../../models/users');
-const { getPuzzleById } = require('../../models/puzzles');
+const { getUserById } = require('../../datasources/users');
+const { getPuzzleById } = require('../../datasources/puzzles');
 
 const { nodeInterface, nodeField } = nodeDefinitions(
   globalId => {
