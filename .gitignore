@@ -2,6 +2,7 @@
 /build
 __generated__
 *.sqlite3
+*.env
 
 npm-debug.log*
 yarn-debug.log*

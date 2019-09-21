@@ -1,11 +1,16 @@
-const users = require('./datasources/users');
-const puzzles = require('./datasources/puzzles');
+const usersDatasource = require('./datasources/users');
+const puzzlesDatasource = require('./datasources/puzzles');
+const { getUser } = require('./authentication');
 
-const buildContext = req => ({
-  datasources: {
-    users,
-    puzzles,
-  },
-});
+const buildContext = req => {
+  const user = getUser(req);
+
+  return {
+    datasources: {
+      users: usersDatasource({ user }),
+      puzzles: puzzlesDatasource({ user }),
+    },
+  };
+};
 
 module.exports = buildContext;

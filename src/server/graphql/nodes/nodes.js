@@ -1,16 +1,14 @@
 const { fromGlobalId, nodeDefinitions } = require('graphql-relay');
-const { getUserById } = require('../../datasources/users');
-const { getPuzzleById } = require('../../datasources/puzzles');
 
 const { nodeInterface, nodeField } = nodeDefinitions(
-  globalId => {
+  (globalId, context) => {
     const { type, id } = fromGlobalId(globalId);
     const getNodeByTypeAndId = (type, id) => {
       switch (type) {
         case 'User':
-          return getUserById(id);
+          return context.users.getUserById(id);
         case 'Puzzle':
-          return getPuzzleById(id);
+          return context.puzzles.getPuzzleById(id);
         default:
           return null;
       }
