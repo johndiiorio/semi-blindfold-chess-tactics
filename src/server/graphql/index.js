@@ -3,14 +3,14 @@ const { GraphQLObjectType, GraphQLSchema } = require('graphql');
 const { nodeField } = require('./nodes/nodes');
 
 const UserQuery = require('./queries/UserQuery');
-const PuzzleSetQuery = require('./queries/PuzzleSetQuery');
+const PuzzlesQuery = require('./queries/PuzzlesQuery');
 const InsightsQuery = require('./queries/InsightsQuery');
 
 const Query = new GraphQLObjectType({
   name: 'Query',
   fields: {
     user: UserQuery,
-    puzzleSet: PuzzleSetQuery,
+    puzzles: PuzzlesQuery,
     insights: InsightsQuery,
     node: nodeField,
   },

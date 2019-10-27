@@ -9,7 +9,8 @@ const initializeDatabase = async () => {
 			id INTEGER PRIMARY KEY,
 			startFen TEXT,
 			difficulty INTEGER,
-			moves TEXT
+      moves TEXT,
+      UNIQUE(startFen)
 		)`,
   );
   await myDatabase.run(
@@ -20,11 +21,10 @@ const initializeDatabase = async () => {
 		)`,
   );
   puzzleData.forEach(async ({ startFen, difficulty, moves }) => {
-    await myDatabase.run('INSERT INTO puzzles (startFen, difficulty, moves) VALUES (?, ?, ?)', [
-      startFen,
-      difficulty,
-      JSON.stringify(moves),
-    ]);
+    await myDatabase.run(
+      'INSERT OR IGNORE INTO puzzles (startFen, difficulty, moves) VALUES (?, ?, ?)',
+      [startFen, difficulty, JSON.stringify(moves)],
+    );
   });
 };
 initializeDatabase();

@@ -8,7 +8,7 @@ const { nodeInterface, nodeField } = nodeDefinitions(
         case 'User':
           return context.users.getUserById(id);
         case 'Puzzle':
-          return context.puzzles.getPuzzleById(id);
+          return context.puzzles.getById(id);
         default:
           return null;
       }

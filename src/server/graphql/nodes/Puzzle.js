@@ -21,7 +21,7 @@ const GraphQLPuzzle = new GraphQLObjectType({
       resolve: puzzle => puzzle.startFen,
     },
     moves: {
-      type: new GraphQLNonNull(GraphQLList(new GraphQLNonNull(GraphQLString))),
+      type: new GraphQLNonNull(GraphQLList(new GraphQLNonNull(GraphQLList(GraphQLString)))),
       resolve: puzzle => puzzle.moves,
     },
   },
