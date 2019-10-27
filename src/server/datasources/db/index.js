@@ -1,4 +1,5 @@
 const SqliteDatabase = require('./sqlite');
+const puzzleData = require('./puzzleData');
 
 const myDatabase = new SqliteDatabase('database.sqlite3');
 
@@ -6,7 +7,9 @@ const initializeDatabase = async () => {
   await myDatabase.run(
     `CREATE TABLE IF NOT EXISTS puzzles (
 			id INTEGER PRIMARY KEY,
-			puzzle TEXT
+			startFen TEXT,
+			difficulty INTEGER,
+			moves TEXT
 		)`,
   );
   await myDatabase.run(
@@ -16,6 +19,13 @@ const initializeDatabase = async () => {
 			rating INTEGER
 		)`,
   );
+  puzzleData.forEach(async ({ startFen, difficulty, moves }) => {
+    await myDatabase.run('INSERT INTO puzzles (startFen, difficulty, moves) VALUES (?, ?, ?)', [
+      startFen,
+      difficulty,
+      JSON.stringify(moves),
+    ]);
+  });
 };
 initializeDatabase();
 

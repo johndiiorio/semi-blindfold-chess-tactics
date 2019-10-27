@@ -1,17 +1,26 @@
-import React from 'react';
-import { createFragmentContainer } from 'react-relay';
-import graphql from 'babel-plugin-relay/macro';
+import React, { useState } from 'react';
+import { useLazyLoadQuery } from 'react-relay/hooks';
+import { graphql } from 'babel-plugin-relay/macro';
+import UserSection from './UserSection';
 
-const Page = ({ user }) => {
-  return <div>Num todos: {user.totalCount}</div>;
+const Page = () => {
+  const [id, updateId] = useState('1');
+  const data = useLazyLoadQuery(
+    graphql`
+      query PageQuery($id: String) {
+        user(id: $id) {
+          ...UserSection_user
+        }
+      }
+    `,
+    { id },
+    { fetchPolicy: 'store-or-network' },
+  );
+  const toggleUser = () => {
+    updateId(id === '1' ? '2' : '1');
+  };
+
+  return <UserSection user={data.user} toggleUser={toggleUser} />;
 };
 
-export default createFragmentContainer(Page, {
-  user: graphql`
-    fragment Page_user on User {
-      id
-      username
-      rating
-    }
-  `,
-});
+export default Page;

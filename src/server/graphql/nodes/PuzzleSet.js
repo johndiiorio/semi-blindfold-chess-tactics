@@ -22,13 +22,14 @@ const GraphQLPuzzleSet = new GraphQLObjectType({
       args: {
         ...connectionArgs,
       },
-      // resolve: (root, { status, after, before, first, last }) =>
-      //   connectionFromArray([...getPuzzles()], {
-      //     after,
-      //     before,
-      //     first,
-      //     last,
-      //   }),
+      resolve: (root, { after, before, first, last }, { datasources }) => {
+        return connectionFromArray([...datasources.puzzles.getAllPuzzles()], {
+          after,
+          before,
+          first,
+          last,
+        });
+      },
     },
   },
   interfaces: [nodeInterface],

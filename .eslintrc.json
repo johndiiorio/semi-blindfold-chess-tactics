@@ -23,6 +23,6 @@
 				"useTabs": false
 			}
 		],
-		"relay/unused-fields": "off" // Mutations aren't located in the same file as Components
+		"relay/generated-flow-types": "off"
 	}
 }
