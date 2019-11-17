@@ -21,7 +21,7 @@ const UserSection = props => {
 
   const onClick = () => {
     startTransition(() => {
-      props.toggleUser();
+      // TODO update user? How?
     });
   };
 

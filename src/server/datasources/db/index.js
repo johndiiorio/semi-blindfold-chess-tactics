@@ -17,7 +17,8 @@ const initializeDatabase = async () => {
     `CREATE TABLE IF NOT EXISTS users (
 			id INTEGER PRIMARY KEY,
 			username TEXT,
-			rating INTEGER
+      rating INTEGER,
+      UNIQUE(username)
 		)`,
   );
   puzzleData.forEach(async ({ startFen, difficulty, moves }) => {
@@ -26,6 +27,19 @@ const initializeDatabase = async () => {
       [startFen, difficulty, JSON.stringify(moves)],
     );
   });
+
+  // TODO remove, for testing purposes
+  const { count } = await myDatabase.get('SELECT COUNT(*) AS count FROM users');
+  if (!count) {
+    await myDatabase.run(
+      'INSERT OR IGNORE INTO users (username, rating) VALUES (?, ?)',
+      ['test', '1500']
+    );
+    await myDatabase.run(
+      'INSERT OR IGNORE INTO users (username, rating) VALUES (?, ?)',
+      ['test2', '1600']
+    );
+  }
 };
 initializeDatabase();
 
