@@ -1,3 +1,4 @@
 export { default as Error } from './Error';
-export { default as ErrorBoundaryWithRetry } from './ErrorBoundaryWithRetry';
+export { default as ErrorBoundary } from './ErrorBoundary';
 export { default as Loading } from './Loading';
+export { default as Chessground } from './Chessground';

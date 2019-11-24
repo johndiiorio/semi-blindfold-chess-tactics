@@ -1,6 +1,6 @@
 import React from 'react';
 
-class ErrorBoundaryWithRetry extends React.Component {
+class ErrorBoundary extends React.Component {
   state = { error: null };
 
   static getDerivedStateFromError(error) {
@@ -24,4 +24,4 @@ class ErrorBoundaryWithRetry extends React.Component {
   }
 }
 
-export default ErrorBoundaryWithRetry;
+export default ErrorBoundary;

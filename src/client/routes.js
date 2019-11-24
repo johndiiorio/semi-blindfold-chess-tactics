@@ -10,14 +10,7 @@ const routes = [
     prepare: params => {
       const RootQuery = require('../__generated__/relay/homeQuery.graphql');
       return {
-        homeQuery: preloadQuery(
-          RelayEnvironment,
-          RootQuery,
-          {
-            id: '1',
-          },
-          { fetchPolicy: 'store-or-network' },
-        ),
+        query: preloadQuery(RelayEnvironment, RootQuery, {}, { fetchPolicy: 'store-or-network' }),
       };
     },
   },

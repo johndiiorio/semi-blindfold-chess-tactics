@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useTransition, Suspense, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import RoutingContext from './RoutingContext';
-import ErrorBoundary from '../components/ErrorBoundaryWithRetry';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 const SUSPENSE_CONFIG = { timeoutMs: 2000 };
 
