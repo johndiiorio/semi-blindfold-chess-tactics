@@ -231,16 +231,12 @@ const Chessground = (props, ref) => {
     if (!containerRef || !containerRef.current) {
       return;
     }
-    if (!cg.current) {
-      cg.current = NativeChessground(containerRef.current, props);
-    } else {
-      // const propsToSet = {};
-      // Object.keys(props).forEach(currentPropName => {
-      //   if (!isEqual(props[currentPropName], previousProps[currentPropName])) {
-      //     propsToSet[currentPropName] = props[currentPropName];
-      //   }
-      // });
-      cg.current.set(props);
+    if (cg.current) {
+      cg.current.destroy();
+    }
+    cg.current = NativeChessground(containerRef.current, props);
+    if (props.turnColor === 'black') {
+      cg.current.toggleOrientation();
     }
     return () => {
       if (cg.current) {

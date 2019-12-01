@@ -16,12 +16,6 @@ const Puzzle = ({ startFen, moves }) => {
   const getBoardFen = () => boardRef.current.invoke('getFen');
 
   useEffect(() => {
-    if (startColor !== COLORS.white) {
-      boardRef.current.invoke('toggleOrientation');
-    }
-  }, [startColor]);
-
-  useEffect(() => {
     if (moveIndex % 2 === 1) {
       const [nextOrigin, nextDestination] = moves[moveIndex];
       boardRef.current.invoke('move', nextOrigin, nextDestination);
@@ -34,10 +28,8 @@ const Puzzle = ({ startFen, moves }) => {
       if (origin === correctOrigin && destination === correctDestination) {
         const nextMoveIndex = moveIndex + 1;
         if (nextMoveIndex === moves.length) {
-          // Win
           console.log('Win');
         } else {
-          // updateCurrentColor(currentColor === COLORS.white ? COLORS.black : COLORS.white);
           updateMoveIndex(nextMoveIndex);
           updateCurrentFen(getBoardFen());
         }
@@ -58,9 +50,6 @@ const Puzzle = ({ startFen, moves }) => {
     fen: currentFen,
     events: {
       move: onMove,
-      select: () => {
-        console.log('Select')
-      },
     },
   };
 
