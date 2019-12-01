@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 import { Chessground as NativeChessground } from 'chessground';
 import { makeStyles } from '@material-ui/styles';
+import { isEqual } from 'lodash';
+import usePrevious from '../../hooks/usePrevious';
 import brown from './assets/brown.svg';
-import bB from './assets/bP.svg';
+import bB from './assets/bB.svg';
 import bK from './assets/bK.svg';
 import bN from './assets/bN.svg';
 import bP from './assets/bP.svg';
@@ -210,19 +212,34 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Chessground = props => {
+const Chessground = (props, ref) => {
   const classes = useStyles();
-  const ref = useRef(null);
+  const containerRef = useRef(null);
   const cg = useRef(null);
-  const { width, height } = props;
+  const previousProps = usePrevious(props);
+
+  useImperativeHandle(ref, () => ({
+    invoke: (fnName, ...args) => {
+      if (!cg.current) {
+        return;
+      }
+      return cg.current[fnName](...args);
+    },
+  }));
 
   useEffect(() => {
-    if (!ref || !ref.current) {
+    if (!containerRef || !containerRef.current) {
       return;
     }
     if (!cg.current) {
-      cg.current = NativeChessground(ref.current, props);
+      cg.current = NativeChessground(containerRef.current, props);
     } else {
+      // const propsToSet = {};
+      // Object.keys(props).forEach(currentPropName => {
+      //   if (!isEqual(props[currentPropName], previousProps[currentPropName])) {
+      //     propsToSet[currentPropName] = props[currentPropName];
+      //   }
+      // });
       cg.current.set(props);
     }
     return () => {
@@ -230,12 +247,12 @@ const Chessground = props => {
         cg.current.destroy();
       }
     };
-  }, [props]);
+  }, [props, previousProps]);
   return (
     <div className={classes.container}>
-      <div ref={ref} style={{ width, height }} />
+      <div ref={containerRef} style={{ width: props.width, height: props.height }} />
     </div>
   );
 };
 
-export default Chessground;
+export default forwardRef(Chessground);
