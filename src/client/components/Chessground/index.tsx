@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
+import React, { useEffect, useRef, useImperativeHandle, forwardRef, RefForwardingComponent } from 'react';
 import { Chessground as NativeChessground } from 'chessground';
 import { makeStyles } from '@material-ui/styles';
 import { isEqual } from 'lodash';
@@ -212,18 +212,35 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Chessground = (props, ref) => {
+type Turn = 'white' | 'black';
+
+type InvokeFn = (fnName: string, ...args: any[]) => any;
+
+interface Props {
+  width: number;
+  height: number;
+  turnColor: Turn;
+}
+
+interface InputRef {
+  invoke: InvokeFn;
+}
+
+interface Props {
+  [propName: string]: any;
+}
+
+const Chessground: RefForwardingComponent<InputRef, Props> = (props, ref) => {
   const classes = useStyles();
-  const containerRef = useRef(null);
-  const cg = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const cg = useRef<any>(null);
   const previousProps = usePrevious(props);
 
   useImperativeHandle(ref, () => ({
     invoke: (fnName, ...args) => {
-      if (!cg.current) {
-        return;
+      if (cg && cg.current) {
+        return cg.current![fnName](...args);
       }
-      return cg.current[fnName](...args);
     },
   }));
 

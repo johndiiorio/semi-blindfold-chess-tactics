@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useTransition, Suspense, useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import RoutingContext from './RoutingContext';
-import ErrorBoundary from '../components/ErrorBoundary';
+import React, { useContext, useState, useEffect, Suspense, useTransition } from 'react';
+import { makeStyles } from '@material-ui/core';
+import RoutingContext, { Entry } from './RoutingContext';
+import { ErrorMessage, ErrorBoundary } from '../components';
 
 const SUSPENSE_CONFIG = { timeoutMs: 2000 };
 
@@ -21,9 +21,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const RouterRenderer = () => {
+  // Access the router
   const router = useContext(RoutingContext);
-  const [startTransition, isPending] = useTransition(SUSPENSE_CONFIG);
+  if (router == null) {
+    throw new Error('RoutingContext not set');
+  }
+
   const classes = useStyles();
+
+  const [startTransition, isPending] = useTransition(SUSPENSE_CONFIG);
 
   const [routeEntry, setRouteEntry] = useState(router.get());
 
@@ -33,19 +39,16 @@ const RouterRenderer = () => {
       setRouteEntry(currentEntry);
       return;
     }
-
     const dispose = router.subscribe(nextEntry => {
       startTransition(() => {
         setRouteEntry(nextEntry);
       });
     });
     return () => dispose();
-    // eslint-disable-next-line
-  }, [router, startTransition]);
+  }, [routeEntry, router, startTransition]);
 
-  const reversedItems = [].concat(routeEntry.entries).reverse();
+  const reversedItems = [...routeEntry.entries].reverse();
   const firstItem = reversedItems[0];
-
   let routeComponent = (
     <RouteComponent
       component={firstItem.component}
@@ -67,7 +70,7 @@ const RouterRenderer = () => {
   }
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary fallback={(error: Error) => <ErrorMessage message="Something went wrong" />}>
       <Suspense fallback={'Loading fallback...'}>
         {isPending ? <div className={classes.pending}>Loading pending...</div> : null}
         {routeComponent}
@@ -76,13 +79,10 @@ const RouterRenderer = () => {
   );
 };
 
-const RouteComponent = ({ component, routeData, prepared, children }) => {
-  const Component = component.read();
-  return (
-    <Component routeData={routeData} prepared={prepared}>
-      {children}
-    </Component>
-  );
+const RouteComponent: React.FC<Entry> = props => {
+  const Component = props.component!.read()!;
+  const { routeData, prepared } = props;
+  return <Component routeData={routeData} prepared={prepared} children={props.children} />;
 };
 
 export default RouterRenderer;

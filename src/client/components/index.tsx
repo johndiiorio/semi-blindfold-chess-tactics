@@ -1,4 +1,4 @@
-export { default as Error } from './Error';
+export { default as ErrorMessage } from './ErrorMessage';
 export { default as ErrorBoundary } from './ErrorBoundary';
 export { default as Loading } from './Loading';
 export { default as Chessground } from './Chessground';

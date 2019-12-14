@@ -2,15 +2,20 @@ import React, { useTransition } from 'react';
 import { usePaginationFragment } from 'react-relay/hooks';
 import { graphql } from 'babel-plugin-relay/macro';
 import { Typography } from '@material-ui/core';
+import { Puzzles_puzzle$key } from '../../../__generated__/relay/Puzzles_puzzle.graphql';
 import Puzzle from './Puzzle';
 
-const PuzzlesSection = props => {
+interface Props {
+  data: Puzzles_puzzle$key
+}
+
+const Puzzles = (props: Props) => {
   const { data, refetch } = usePaginationFragment(
     graphql`
-      fragment PuzzlesSection_puzzle on Query
+      fragment Puzzles_puzzle on Query
         @argumentDefinitions(cursor: { type: "String" }, count: { type: "Int", defaultValue: 10 })
-        @refetchable(queryName: "PuzzlesSectionPaginationQuery") {
-        puzzles(first: $count, after: $cursor) @connection(key: "PuzzlesSection_puzzles") {
+        @refetchable(queryName: "PuzzlesPaginationQuery") {
+        puzzles(first: $count, after: $cursor) @connection(key: "Puzzles_puzzles") {
           edges {
             node {
               id
@@ -26,7 +31,7 @@ const PuzzlesSection = props => {
 
   const [startTransition] = useTransition({ timeoutMs: 500 });
 
-  const puzzles = data.puzzles.edges.map(edge => edge.node);
+  const puzzles = data!.puzzles!.edges!.map(edge => edge!.node);
 
   const onClick = () => {
     startTransition(() => {
@@ -38,10 +43,10 @@ const PuzzlesSection = props => {
     <div>
       <Typography variant="h4">Puzzles</Typography>
       {puzzles.map(puzzle => (
-        <Puzzle key={puzzle.id} {...puzzle} />
+        <Puzzle key={puzzle!.id} startFen={puzzle!.startFen} moves={puzzle!.moves} />
       ))}
     </div>
   );
 };
 
-export default PuzzlesSection;
+export default Puzzles;

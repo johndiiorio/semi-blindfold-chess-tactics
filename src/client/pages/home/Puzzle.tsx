@@ -7,18 +7,25 @@ const COLORS = {
   black: 'black',
 };
 
-const Puzzle = ({ startFen, moves }) => {
+interface Props {
+  startFen: string;
+  moves: readonly (readonly (string | null)[])[];
+}
+
+const Puzzle = ({ startFen, moves }: Props) => {
   const [moveIndex, updateMoveIndex] = useState(0);
   const startColor = startFen.split(' ')[1] === 'w' ? COLORS.white : COLORS.black;
   const [currentFen, updateCurrentFen] = useState(startFen);
-  const boardRef = useRef(null);
+  const boardRef = useRef<any>(null);
 
-  const getBoardFen = () => boardRef.current.invoke('getFen');
+  const getBoardFen = () => {
+    return boardRef.current!.invoke('getFen');
+  };
 
   useEffect(() => {
     if (moveIndex % 2 === 1) {
       const [nextOrigin, nextDestination] = moves[moveIndex];
-      boardRef.current.invoke('move', nextOrigin, nextDestination);
+      boardRef.current!.invoke('move', nextOrigin, nextDestination);
     }
   }, [moveIndex, moves]);
 

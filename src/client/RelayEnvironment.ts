@@ -1,12 +1,12 @@
-import { Environment, Network, RecordSource, Store } from 'relay-runtime';
+import { Environment, Network, RecordSource, Store, FetchFunction } from 'relay-runtime';
 
-async function relayFetch(params, variables) {
+const relayFetch: FetchFunction = async (params, variables) => {
   let headers = {
     'Content-Type': 'application/json',
   };
   const token = localStorage.getItem('token');
   if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
+    (headers as any)['Authorization'] = `Bearer ${token}`;
   }
 
   const response = await fetch('/graphql', {
