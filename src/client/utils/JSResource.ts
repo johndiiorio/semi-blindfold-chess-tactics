@@ -109,10 +109,7 @@ export class Resource<T> {
  * @param {*} moduleId A globally unique identifier for the resource used for caching
  * @param {*} loader A method to load the resource's data if necessary
  */
-export default function JSResource<T>(
-  moduleId: typeof UniqueId,
-  loader: Loader<T>,
-): Resource<T> {
+export default function JSResource<T>(moduleId: typeof UniqueId, loader: Loader<T>): Resource<T> {
   let resource = resourceMap.get(moduleId);
   if (resource == null) {
     resource = new Resource(loader);

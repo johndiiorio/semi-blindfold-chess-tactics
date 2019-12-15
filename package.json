@@ -49,7 +49,6 @@
     "@types/relay-runtime": "~6.0.11",
     "@typescript-eslint/eslint-plugin": "~2.11.0",
     "@typescript-eslint/parser": "~2.11.0",
-    "babel-eslint": "~10.0.3",
     "babel-plugin-relay": "~7.0.0",
     "eslint-config-prettier": "~6.1.0",
     "eslint-config-react-app": "~5.0.2",
@@ -79,10 +78,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "babelMacros": {
-    "relay": {
-      "artifactDirectory": "./src/__generated__/relay"
-    }
   }
 }

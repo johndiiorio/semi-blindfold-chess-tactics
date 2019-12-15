@@ -3,6 +3,7 @@
 __generated__
 *.sqlite3
 *.env
+*.graphql
 
 npm-debug.log*
 yarn-debug.log*

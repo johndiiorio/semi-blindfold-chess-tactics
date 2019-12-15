@@ -1,7 +1,7 @@
 import { preloadQuery } from 'react-relay/hooks';
 import JSResource from './utils/JSResource';
 import RelayEnvironment from './RelayEnvironment';
-import RootQuery from '../__generated__/relay/homeQuery.graphql';
+import PageQuery from './pages/home/__generated__/PageQuery.graphql';
 
 const routes = [
   {
@@ -10,7 +10,7 @@ const routes = [
     component: JSResource('Root', () => import('./pages/home')),
     prepare: () => {
       return {
-        query: preloadQuery(RelayEnvironment, RootQuery, {}, { fetchPolicy: 'store-or-network' }),
+        query: preloadQuery(RelayEnvironment, PageQuery, {}, { fetchPolicy: 'store-or-network' }),
       };
     },
   },

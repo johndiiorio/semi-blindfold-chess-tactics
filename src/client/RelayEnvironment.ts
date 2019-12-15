@@ -29,7 +29,7 @@ const relayFetch: FetchFunction = async (params, variables) => {
   }
 
   return json;
-}
+};
 
 export default new Environment({
   network: Network.create(relayFetch),

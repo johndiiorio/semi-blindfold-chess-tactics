@@ -1,12 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { GraphQLTaggedNode } from 'react-relay';
 import { useRelayEnvironment } from 'react-relay/hooks';
-import {
-  MutationConfig,
-  MutationParameters,
-  commitMutation,
-  Disposable,
-} from 'relay-runtime';
+import { MutationConfig, MutationParameters, commitMutation, Disposable } from 'relay-runtime';
 
 type CustomMutationConfig<TOperationType extends MutationParameters> = Omit<
   MutationConfig<TOperationType>,

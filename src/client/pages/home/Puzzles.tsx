@@ -2,7 +2,7 @@ import React, { useTransition } from 'react';
 import { usePaginationFragment } from 'react-relay/hooks';
 import { graphql } from 'babel-plugin-relay/macro';
 import { Typography } from '@material-ui/core';
-import { Puzzles_puzzle$key } from '../../../__generated__/relay/Puzzles_puzzle.graphql';
+import { Puzzles_puzzle$key } from './__generated__/Puzzles_puzzle.graphql';
 import Puzzle from './Puzzle';
 
 interface Props {

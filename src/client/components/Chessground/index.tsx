@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useImperativeHandle, forwardRef, RefForwardingComponent } from 'react';
 import { Chessground as NativeChessground } from 'chessground';
 import { makeStyles } from '@material-ui/styles';
-import { isEqual } from 'lodash';
 import usePrevious from '../../hooks/usePrevious';
 import brown from './assets/brown.svg';
 import bB from './assets/bB.svg';
