@@ -1,4 +1,4 @@
 /// <reference types="react-scripts" />
 declare module 'babel-plugin-relay/macro' {
-  export { graphql } from 'react-relay/hooks'
+  export { graphql } from 'react-relay/hooks';
 }

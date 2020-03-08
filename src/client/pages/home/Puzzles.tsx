@@ -6,7 +6,7 @@ import { Puzzles_puzzle$key } from './__generated__/Puzzles_puzzle.graphql';
 import Puzzle from './Puzzle';
 
 interface Props {
-  data: Puzzles_puzzle$key
+  data: Puzzles_puzzle$key;
 }
 
 const Puzzles = (props: Props) => {
