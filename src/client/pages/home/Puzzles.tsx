@@ -14,9 +14,13 @@ const Puzzles = (props: Props) => {
   const { data, refetch } = usePaginationFragment(
     graphql`
       fragment Puzzles_puzzle on Query
-        @argumentDefinitions(cursor: { type: "String" }, count: { type: "Int", defaultValue: 10 })
+        @argumentDefinitions(
+          cursor: { type: "String" }
+          count: { type: "Int", defaultValue: 10 }
+        )
         @refetchable(queryName: "PuzzlesPaginationQuery") {
-        puzzles(first: $count, after: $cursor) @connection(key: "Puzzles_puzzles") {
+        puzzles(first: $count, after: $cursor)
+          @connection(key: "Puzzles_puzzles") {
           edges {
             node {
               id
@@ -27,7 +31,7 @@ const Puzzles = (props: Props) => {
         }
       }
     `,
-    props.data,
+    props.data
   );
 
   const [startTransition] = useTransition({ timeoutMs: 500 });

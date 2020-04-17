@@ -32,7 +32,7 @@ const { nodeInterface, nodeField } = nodeDefinitions(
       default:
         return null;
     }
-  },
+  }
 );
 
 module.exports = {

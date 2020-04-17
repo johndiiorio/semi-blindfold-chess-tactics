@@ -1,8 +1,15 @@
-const { connectionDefinitions, connectionArgs, connectionFromArray } = require('graphql-relay');
+const {
+  connectionDefinitions,
+  connectionArgs,
+  connectionFromArray,
+} = require('graphql-relay');
 
 const { GraphQLInsight } = require('../nodes/Insight');
 
-const { connectionType: InsightConnection, edgeType: InsightEdge } = connectionDefinitions({
+const {
+  connectionType: InsightConnection,
+  edgeType: InsightEdge,
+} = connectionDefinitions({
   name: 'Insight',
   nodeType: GraphQLInsight,
 });

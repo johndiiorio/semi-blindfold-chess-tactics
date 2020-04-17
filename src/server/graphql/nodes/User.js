@@ -1,4 +1,9 @@
-const { GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } = require('graphql');
+const {
+  GraphQLInt,
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLString,
+} = require('graphql');
 const { globalIdField } = require('graphql-relay');
 const { nodeInterface } = require('./nodes');
 

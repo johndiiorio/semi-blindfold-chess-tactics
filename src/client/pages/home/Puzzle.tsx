@@ -23,7 +23,8 @@ const useStyles = makeStyles(theme => ({
 const Puzzle = ({ startFen, moves }: Props) => {
   const classes = useStyles();
   const [moveIndex, updateMoveIndex] = useState(0);
-  const startColor = startFen.split(' ')[1] === 'w' ? COLORS.white : COLORS.black;
+  const startColor =
+    startFen.split(' ')[1] === 'w' ? COLORS.white : COLORS.black;
   const [currentFen, updateCurrentFen] = useState(startFen);
   const boardRef = useRef<any>(null);
 
@@ -53,7 +54,7 @@ const Puzzle = ({ startFen, moves }: Props) => {
         console.log('Fail');
       }
     },
-    [moveIndex, moves],
+    [moveIndex, moves]
   );
 
   const config = {
@@ -69,7 +70,9 @@ const Puzzle = ({ startFen, moves }: Props) => {
     },
   };
 
-  return <Chessground className={classes.chessground} ref={boardRef} {...config} />;
+  return (
+    <Chessground className={classes.chessground} ref={boardRef} {...config} />
+  );
 };
 
 Puzzle.propTypes = {

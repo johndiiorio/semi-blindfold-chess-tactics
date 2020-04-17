@@ -1,7 +1,14 @@
-const { connectionDefinitions, connectionArgs, connectionFromArray } = require('graphql-relay');
+const {
+  connectionDefinitions,
+  connectionArgs,
+  connectionFromArray,
+} = require('graphql-relay');
 const { GraphQLPuzzle } = require('../nodes/Puzzle');
 
-const { connectionType: PuzzleConnection, edgeType: PuzzleEdge } = connectionDefinitions({
+const {
+  connectionType: PuzzleConnection,
+  edgeType: PuzzleEdge,
+} = connectionDefinitions({
   name: 'Puzzle',
   nodeType: GraphQLPuzzle,
 });

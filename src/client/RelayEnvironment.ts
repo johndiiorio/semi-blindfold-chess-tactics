@@ -1,4 +1,10 @@
-import { Environment, Network, RecordSource, Store, FetchFunction } from 'relay-runtime';
+import {
+  Environment,
+  Network,
+  RecordSource,
+  Store,
+  FetchFunction,
+} from 'relay-runtime';
 
 const relayFetch: FetchFunction = async (params, variables) => {
   let headers = {
@@ -22,9 +28,11 @@ const relayFetch: FetchFunction = async (params, variables) => {
 
   if (Array.isArray(json.errors)) {
     throw new Error(
-      `Error fetching GraphQL query '${params.name}' with variables '${JSON.stringify(
-        variables,
-      )}': ${JSON.stringify(json.errors)}`,
+      `Error fetching GraphQL query '${
+        params.name
+      }' with variables '${JSON.stringify(variables)}': ${JSON.stringify(
+        json.errors
+      )}`
     );
   }
 

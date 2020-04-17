@@ -1,5 +1,12 @@
-import { createBrowserHistory, BrowserHistoryBuildOptions, Location } from 'history';
-import { matchRoutes, RouteConfig as DefaultRouteConfig } from 'react-router-config';
+import {
+  createBrowserHistory,
+  BrowserHistoryBuildOptions,
+  Location,
+} from 'history';
+import {
+  matchRoutes,
+  RouteConfig as DefaultRouteConfig,
+} from 'react-router-config';
 import { Router, Route, Entry } from './RoutingContext';
 import { Resource } from '../utils/JSResource';
 import { PreloadedQuery } from 'react-relay/lib/relay-experimental/EntryPointTypes';
@@ -12,7 +19,9 @@ export interface RouteConfig {
   exact?: boolean;
   strict?: boolean;
   component: Resource<any>;
-  prepare: (params: { [key: string]: string }) => { [queryName: string]: PreloadedQuery<any> };
+  prepare: (params: {
+    [key: string]: string;
+  }) => { [queryName: string]: PreloadedQuery<any> };
   routes?: RouteConfig[];
 }
 
@@ -27,7 +36,10 @@ export interface MatchedRoute<Params extends { [K in keyof Params]?: string }> {
  * The router watches for changes to the current location via the `history` package, maps the
  * location to the corresponding route entry, and then preloads the code and data for the route.
  */
-export default function createRouter(routes: RouteConfig[], options?: BrowserHistoryBuildOptions) {
+export default function createRouter(
+  routes: RouteConfig[],
+  options?: BrowserHistoryBuildOptions
+) {
   // Initialize history
   const history = createBrowserHistory(options);
 
@@ -70,15 +82,17 @@ export default function createRouter(routes: RouteConfig[], options?: BrowserHis
       // preload just the code for a route, without storing the result
       const matches = (matchRoutes(
         (routes as unknown) as DefaultRouteConfig[],
-        pathname,
+        pathname
       ) as unknown) as MatchedRoute<{}>[];
-      matches.forEach(({ route }: { route: RouteConfig }) => route.component.load());
+      matches.forEach(({ route }: { route: RouteConfig }) =>
+        route.component.load()
+      );
     },
     preload(pathname: string) {
       // preload the code and data for a route, without storing the result
       const matches = (matchRoutes(
         (routes as unknown) as DefaultRouteConfig[],
-        pathname,
+        pathname
       ) as unknown) as MatchedRoute<{}>[];
       prepareMatches(matches);
     },
@@ -102,7 +116,7 @@ export default function createRouter(routes: RouteConfig[], options?: BrowserHis
 function matchRoute(routes: RouteConfig[], location: Location) {
   const matchedRoutes = (matchRoutes(
     (routes as unknown) as DefaultRouteConfig[],
-    location.pathname,
+    location.pathname
   ) as unknown) as MatchedRoute<{}>[];
 
   if (!Array.isArray(matchedRoutes) || matchedRoutes.length === 0) {

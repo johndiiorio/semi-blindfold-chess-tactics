@@ -20,7 +20,7 @@ const Page = ({ prepared }: Props) => {
         ...Puzzles_puzzle
       }
     `,
-    prepared.query,
+    prepared.query
   );
 
   return (

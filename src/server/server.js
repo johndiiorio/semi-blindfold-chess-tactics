@@ -23,7 +23,7 @@ app.use(
     pretty: true,
     graphiql: process.env.NODE_ENV === 'development',
     context: buildContext(req),
-  })),
+  }))
 );
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', '..', 'public', 'index.html'));

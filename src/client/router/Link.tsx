@@ -23,7 +23,7 @@ const Link: React.FC<Props> = props => {
       event.preventDefault();
       router.history.push(props.to);
     },
-    [props.to, router],
+    [props.to, router]
   );
 
   // Callback to preload just the code for the route:

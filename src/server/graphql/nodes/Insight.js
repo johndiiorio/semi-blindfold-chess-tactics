@@ -9,7 +9,10 @@ const { nodeInterface } = require('./nodes');
 const { GraphQLTopScore } = require('./TopScore');
 const { GraphQLPuzzle } = require('./Puzzle');
 
-const { connectionType: TopScoreConnection, edgeType: TopScoreEdge } = connectionDefinitions({
+const {
+  connectionType: TopScoreConnection,
+  edgeType: TopScoreEdge,
+} = connectionDefinitions({
   name: 'TopScore',
   nodeType: GraphQLTopScore,
 });

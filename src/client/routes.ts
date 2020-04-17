@@ -10,7 +10,12 @@ const routes = [
     component: JSResource('Root', () => import('./pages/home')),
     prepare: () => {
       return {
-        query: preloadQuery(RelayEnvironment, PageQuery, {}, { fetchPolicy: 'store-or-network' }),
+        query: preloadQuery(
+          RelayEnvironment,
+          PageQuery,
+          {},
+          { fetchPolicy: 'store-or-network' }
+        ),
       };
     },
   },

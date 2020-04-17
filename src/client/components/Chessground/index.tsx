@@ -76,10 +76,12 @@ const useStyles = makeStyles(() => ({
           'radial-gradient(rgba(20, 30, 85, 0.5) 22%, #203085 0, rgba(0, 0, 0, 0.3) 0, rgba(0, 0, 0, 0) 0)',
       },
       'cg-board square.oc.move-dest': {
-        background: 'radial-gradient(transparent 0%, transparent 80%, rgba(20, 85, 0, 0.3) 80%)',
+        background:
+          'radial-gradient(transparent 0%, transparent 80%, rgba(20, 85, 0, 0.3) 80%)',
       },
       'cg-board square.oc.premove-dest': {
-        background: 'radial-gradient(transparent 0%, transparent 80%, rgba(20, 30, 85, 0.2) 80%)',
+        background:
+          'radial-gradient(transparent 0%, transparent 80%, rgba(20, 30, 85, 0.2) 80%)',
       },
       'cg-board square.move-dest:hover': {
         background: 'rgba(20, 85, 30, 0.3)',
@@ -270,7 +272,10 @@ const Chessground: RefForwardingComponent<InputRef, Props> = (props, ref) => {
   }, [props, previousProps]);
   return (
     <div className={classNames(classes.container, props.className)}>
-      <div ref={containerRef} style={{ width: props.width, height: props.height }} />
+      <div
+        ref={containerRef}
+        style={{ width: props.width, height: props.height }}
+      />
     </div>
   );
 };
