@@ -2,9 +2,10 @@ import React, { Suspense } from 'react';
 import { usePreloadedQuery } from 'react-relay/hooks';
 import { graphql } from 'babel-plugin-relay/macro';
 import { PreloadedQuery } from 'react-relay/lib/relay-experimental/EntryPointTypes';
-import { PageQuery } from './__generated__/PageQuery.graphql';
+import { AppBar, Toolbar } from '@material-ui/core';
 import Puzzles from './Puzzles';
-import { Loading, ErrorBoundary, ErrorMessage } from '../../components';
+import { Loading, ErrorBoundary, ErrorPage } from '../../components';
+import { PageQuery } from './__generated__/PageQuery.graphql';
 
 interface Props {
   prepared: {
@@ -24,7 +25,10 @@ const Page = ({ prepared }: Props) => {
 
   return (
     <Suspense fallback={<Loading />}>
-      <ErrorBoundary fallback={(error: Error) => <ErrorMessage message="Something went wrong" />}>
+      <ErrorBoundary fallback={(error: Error) => <ErrorPage />}>
+        <AppBar position="static">
+          <Toolbar>hi</Toolbar>
+        </AppBar>
         <Puzzles data={data} />
       </ErrorBoundary>
     </Suspense>

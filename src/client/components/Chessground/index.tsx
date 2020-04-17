@@ -1,4 +1,11 @@
-import React, { useEffect, useRef, useImperativeHandle, forwardRef, RefForwardingComponent } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+  RefForwardingComponent,
+} from 'react';
+import classNames from 'classnames';
 import { Chessground as NativeChessground } from 'chessground';
 import { makeStyles } from '@material-ui/styles';
 import usePrevious from '../../hooks/usePrevious';
@@ -219,6 +226,7 @@ interface Props {
   width: number;
   height: number;
   turnColor: Turn;
+  className?: string;
 }
 
 interface InputRef {
@@ -261,7 +269,7 @@ const Chessground: RefForwardingComponent<InputRef, Props> = (props, ref) => {
     };
   }, [props, previousProps]);
   return (
-    <div className={classes.container}>
+    <div className={classNames(classes.container, props.className)}>
       <div ref={containerRef} style={{ width: props.width, height: props.height }} />
     </div>
   );

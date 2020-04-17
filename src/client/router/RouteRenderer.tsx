@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, Suspense, useTransition } from 'react';
 import { makeStyles } from '@material-ui/core';
 import RoutingContext, { Entry } from './RoutingContext';
-import { ErrorMessage, ErrorBoundary } from '../components';
+import { ErrorPage, ErrorBoundary } from '../components';
 
 const SUSPENSE_CONFIG = { timeoutMs: 2000 };
 
@@ -70,7 +70,7 @@ const RouterRenderer = () => {
   }
 
   return (
-    <ErrorBoundary fallback={(error: Error) => <ErrorMessage message="Something went wrong" />}>
+    <ErrorBoundary fallback={(error: Error) => <ErrorPage />}>
       <Suspense fallback={'Loading fallback...'}>
         {isPending ? <div className={classes.pending}>Loading pending...</div> : null}
         {routeComponent}
@@ -82,7 +82,11 @@ const RouterRenderer = () => {
 const RouteComponent: React.FC<Entry> = props => {
   const Component = props.component!.read()!;
   const { routeData, prepared } = props;
-  return <Component routeData={routeData} prepared={prepared} children={props.children} />;
+  return (
+    <Component routeData={routeData} prepared={prepared}>
+      {props.children}
+    </Component>
+  );
 };
 
 export default RouterRenderer;

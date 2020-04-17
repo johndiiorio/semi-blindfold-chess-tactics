@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/styles';
 import Chessground from '../../components/Chessground';
 
 const COLORS = {
@@ -12,7 +13,15 @@ interface Props {
   moves: readonly (readonly (string | null)[])[];
 }
 
+const useStyles = makeStyles(theme => ({
+  chessground: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+}));
+
 const Puzzle = ({ startFen, moves }: Props) => {
+  const classes = useStyles();
   const [moveIndex, updateMoveIndex] = useState(0);
   const startColor = startFen.split(' ')[1] === 'w' ? COLORS.white : COLORS.black;
   const [currentFen, updateCurrentFen] = useState(startFen);
@@ -48,8 +57,8 @@ const Puzzle = ({ startFen, moves }: Props) => {
   );
 
   const config = {
-    width: 400,
-    height: 400,
+    width: 500,
+    height: 500,
     turnColor: startColor,
     movable: {
       color: startColor,
@@ -60,7 +69,7 @@ const Puzzle = ({ startFen, moves }: Props) => {
     },
   };
 
-  return <Chessground ref={boardRef} {...config} />;
+  return <Chessground className={classes.chessground} ref={boardRef} {...config} />;
 };
 
 Puzzle.propTypes = {
