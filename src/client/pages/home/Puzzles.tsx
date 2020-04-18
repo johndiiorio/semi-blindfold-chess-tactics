@@ -1,7 +1,7 @@
-import React, { useTransition, useState } from 'react';
+import React, { useTransition, useState, useCallback } from 'react';
 import { usePaginationFragment } from 'react-relay/hooks';
 import { graphql } from 'babel-plugin-relay/macro';
-import { Typography, Button } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { Puzzles_puzzle$key } from './__generated__/Puzzles_puzzle.graphql';
 import Puzzle from './Puzzle';
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
 const Puzzles = (props: Props) => {
   const [currentPuzzleIndex, updateCurrentPuzzleIndex] = useState(0);
   const classes = useStyles();
-  const { data, loadNext, hasNext } = usePaginationFragment(
+  const { data, loadNext, hasNext: morePuzzlesExist } = usePaginationFragment(
     graphql`
       fragment Puzzles_puzzle on Query
         @argumentDefinitions(
@@ -47,27 +47,37 @@ const Puzzles = (props: Props) => {
 
   const puzzles = data!.puzzles!.edges!.map(edge => edge!.node);
   const currentPuzzle = puzzles[currentPuzzleIndex];
-  const showNextPuzzleButton = hasNext;
 
-  const onClick = () => {
-    updateCurrentPuzzleIndex(currentPuzzleIndex + 1);
-    startTransition(() => {
-      loadNext(1);
-    });
-  };
+  const onPuzzleFinish = useCallback(() => {
+    if (morePuzzlesExist) {
+      updateCurrentPuzzleIndex(currentPuzzleIndex + 1);
+      startTransition(() => {
+        loadNext(1);
+      });
+    } else {
+      // TODO redirect to finish
+    }
+  }, [currentPuzzleIndex, loadNext, morePuzzlesExist, startTransition]);
+
+  const onSuccess = useCallback(() => {
+    // TODO show success
+    onPuzzleFinish();
+  }, [onPuzzleFinish]);
+
+  const onFail = useCallback(() => {
+    // TODO show fail
+    onPuzzleFinish();
+  }, [onPuzzleFinish]);
 
   return (
     <div>
       <Typography variant="h5">Puzzles</Typography>
-      {showNextPuzzleButton && (
-        <Button variant="contained" onClick={onClick}>
-          Next puzzle
-        </Button>
-      )}
       {currentPuzzle && (
         <Puzzle
-          startFen={currentPuzzle!.startFen}
-          moves={currentPuzzle!.moves}
+          startFen={currentPuzzle.startFen}
+          moves={currentPuzzle.moves}
+          onSuccess={onSuccess}
+          onFail={onFail}
         />
       )}
       <div className={classes.loading}>{isPending && <Loading />}</div>

@@ -12,6 +12,8 @@ const COLORS = {
 interface Props {
   startFen: string;
   moves: readonly (readonly (string | null)[])[];
+  onSuccess: () => void;
+  onFail: () => void;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -21,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Puzzle = ({ startFen, moves }: Props) => {
+const Puzzle = ({ startFen, moves, onSuccess, onFail }: Props) => {
   const classes = useStyles();
   const [moveIndex, updateMoveIndex] = useState(0);
   const startColor =
@@ -46,16 +48,16 @@ const Puzzle = ({ startFen, moves }: Props) => {
       if (origin === correctOrigin && destination === correctDestination) {
         const nextMoveIndex = moveIndex + 1;
         if (nextMoveIndex === moves.length) {
-          console.log('Win');
+          onSuccess();
         } else {
           updateMoveIndex(nextMoveIndex);
           updateCurrentFen(getBoardFen());
         }
       } else {
-        console.log('Fail');
+        onFail();
       }
     },
-    [moveIndex, moves]
+    [moveIndex, moves, onFail, onSuccess]
   );
 
   const config = {
