@@ -1,4 +1,4 @@
-export { default as CheckmarkIndicator } from './CheckmarkIndicator';
+export { default as SuccessIndicator } from './SuccessIndicator';
 export { default as ErrorPage } from './ErrorPage';
 export { default as ErrorMessage } from './ErrorMessage';
 export { default as ErrorBoundary } from './ErrorBoundary';

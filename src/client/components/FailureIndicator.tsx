@@ -1,6 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 
+interface Props {
+  size: number;
+}
+
 const useStyles = makeStyles(theme => ({
   circle: {
     strokeDasharray: 166,
@@ -12,8 +16,6 @@ const useStyles = makeStyles(theme => ({
     animation: 'stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards',
   },
   failure: {
-    width: 56,
-    height: 56,
     borderRadius: '50%',
     display: 'block',
     strokeWidth: 2,
@@ -44,18 +46,22 @@ const useStyles = makeStyles(theme => ({
   },
   '@keyframes fill': {
     '100%': {
-      boxShadow: 'inset 0px 0px 0px 30px #f44336',
+      boxShadow: `inset 0px 0px 0px 1000px #f44336`,
     },
   },
 }));
 
-const FailureIndicator = () => {
+const FailureIndicator = ({ size }: Props) => {
   const classes = useStyles();
   return (
     <svg
       className={classes.failure}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 52 52"
+      style={{
+        width: size,
+        height: size,
+      }}
     >
       <circle className={classes.circle} cx="26" cy="26" r="25" fill="none" />
       <path
