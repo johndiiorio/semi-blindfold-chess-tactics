@@ -5,26 +5,10 @@ import React, {
   Suspense,
   useTransition,
 } from 'react';
-import { makeStyles } from '@material-ui/core';
 import RoutingContext, { Entry } from './RoutingContext';
-import { ErrorPage, ErrorBoundary } from '../components';
+import { ErrorPage, ErrorBoundary, Loading } from '../components';
 
 const SUSPENSE_CONFIG = { timeoutMs: 2000 };
-
-const useStyles = makeStyles(theme => ({
-  pending: {
-    position: 'absolute',
-    zIndex: 1,
-    backgroundColor: '#fff',
-    animation: '0s linear 0.5s forwards $makeVisible',
-    visibility: 'hidden',
-  },
-  '@keyframes makeVisible': {
-    to: {
-      visibility: 'visible',
-    },
-  },
-}));
 
 const RouterRenderer = () => {
   // Access the router
@@ -32,8 +16,6 @@ const RouterRenderer = () => {
   if (router == null) {
     throw new Error('RoutingContext not set');
   }
-
-  const classes = useStyles();
 
   const [startTransition, isPending] = useTransition(SUSPENSE_CONFIG);
 
@@ -77,10 +59,8 @@ const RouterRenderer = () => {
 
   return (
     <ErrorBoundary fallback={(error: Error) => <ErrorPage />}>
-      <Suspense fallback={'Loading fallback...'}>
-        {isPending ? (
-          <div className={classes.pending}>Loading pending...</div>
-        ) : null}
+      <Suspense fallback={<Loading />}>
+        {isPending && <Loading />}
         {routeComponent}
       </Suspense>
     </ErrorBoundary>

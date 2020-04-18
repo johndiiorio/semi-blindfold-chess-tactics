@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import Chessground from '../../components/Chessground';
+import { getMinVInPx } from '../../utils/dom';
 
 const COLORS = {
   white: 'white',
@@ -58,8 +59,8 @@ const Puzzle = ({ startFen, moves }: Props) => {
   );
 
   const config = {
-    width: 500,
-    height: 500,
+    width: getMinVInPx(80),
+    height: getMinVInPx(80),
     turnColor: startColor,
     movable: {
       color: startColor,

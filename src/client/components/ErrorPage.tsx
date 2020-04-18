@@ -7,12 +7,16 @@ const useStyles = makeStyles(theme => ({
     width: '100vw',
     height: '100vh',
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  child: {
+  text: {
+    marginBottom: 16,
+  },
+  buttonContainer: {
     display: 'flex',
-    flexDirection: 'column',
+    justifyContent: 'center',
   },
 }));
 
@@ -20,8 +24,13 @@ const ErrorPage = () => {
   const classes = useStyles();
   return (
     <div className={classes.container}>
-      <div className={classes.child}>
-        <Typography variant="h3">Oops! There was an error.</Typography>
+      <Typography className={classes.text} variant="h1">
+        Oops!
+      </Typography>
+      <Typography className={classes.text} variant="h5">
+        There was an unexpected error. Please try again.
+      </Typography>
+      <div className={classes.buttonContainer}>
         <Button variant="contained" onClick={() => window.location.reload()}>
           Retry
         </Button>
