@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import { usePreloadedQuery } from 'react-relay/hooks';
 import { graphql } from 'babel-plugin-relay/macro';
 import { PreloadedQuery } from 'react-relay/lib/relay-experimental/EntryPointTypes';
@@ -7,6 +7,7 @@ import Puzzles from './Puzzles';
 import AppBar from './AppBar';
 import { Loading, ErrorBoundary, ErrorPage } from '../../components';
 import { PageQuery } from './__generated__/PageQuery.graphql';
+import Countdown from './Countdown';
 
 interface Props {
   prepared: {
@@ -17,11 +18,13 @@ interface Props {
 const useStyles = makeStyles(() => ({
   page: {
     padding: 16,
+    height: '100%',
   },
 }));
 
 const Page = ({ prepared }: Props) => {
   const classes = useStyles();
+  const [finishedCountdown, updateFinishedCountdown] = useState(false);
   const data = usePreloadedQuery(
     graphql`
       query PageQuery {
@@ -36,7 +39,14 @@ const Page = ({ prepared }: Props) => {
       <ErrorBoundary fallback={(error: Error) => <ErrorPage />}>
         <AppBar />
         <div className={classes.page}>
-          <Puzzles data={data} />
+          {finishedCountdown ? (
+            <Puzzles data={data} />
+          ) : (
+            <Countdown
+              finish={() => updateFinishedCountdown(true)}
+              startNum={3}
+            />
+          )}
         </div>
       </ErrorBoundary>
     </Suspense>

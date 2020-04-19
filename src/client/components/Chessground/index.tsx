@@ -218,6 +218,9 @@ const useStyles = makeStyles(() => ({
       },
     },
   },
+  disabled: {
+    opacity: 0.2,
+  },
 }));
 
 type Turn = 'white' | 'black';
@@ -239,7 +242,10 @@ interface Props {
   [propName: string]: any;
 }
 
-const Chessground: RefForwardingComponent<InputRef, Props> = (props, ref) => {
+const Chessground: RefForwardingComponent<InputRef, Props> = (
+  props: Props,
+  ref
+) => {
   const classes = useStyles();
   const containerRef = useRef<HTMLDivElement>(null);
   const cg = useRef<any>(null);
@@ -271,7 +277,11 @@ const Chessground: RefForwardingComponent<InputRef, Props> = (props, ref) => {
     };
   }, [props, previousProps]);
   return (
-    <div className={classNames(classes.container, props.className)}>
+    <div
+      className={classNames(classes.container, props.className, {
+        [classes.disabled]: props.viewOnly,
+      })}
+    >
       <div
         ref={containerRef}
         style={{ width: props.width, height: props.height }}
